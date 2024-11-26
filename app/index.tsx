@@ -20,6 +20,17 @@ export default function AppPage() {
           <Text style={styles.buttonText}>Ver mi perfil</Text>
         </Pressable>
       </Link>
+
+      <Link href="./shopping" asChild>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed && styles.buttonPressed,
+          ]}
+        >
+          <Text style={styles.buttonText}>Ir a la lista de compras</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3A00B2",
   },
   buttonText: {
-    color: "black",
+    color: "white",
     fontSize: 17,
     fontWeight: "700",
     letterSpacing: 0.5,
