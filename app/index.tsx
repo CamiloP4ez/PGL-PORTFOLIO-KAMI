@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { Link } from "expo-router";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import "react-native-get-random-values";
 
 export default function AppPage() {
   return (
@@ -18,6 +19,17 @@ export default function AppPage() {
           ]}
         >
           <Text style={styles.buttonText}>Ver mi perfil</Text>
+        </Pressable>
+      </Link>
+
+      <Link href="./shopping" asChild>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed && styles.buttonPressed,
+          ]}
+        >
+          <Text style={styles.buttonText}>Ir a la lista de compras</Text>
         </Pressable>
       </Link>
     </View>
@@ -62,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3A00B2",
   },
   buttonText: {
-    color: "black",
+    color: "#333333",
     fontSize: 17,
     fontWeight: "700",
     letterSpacing: 0.5,
