@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
+import { Redirect, router } from "expo-router";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 // import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -30,8 +31,11 @@ const RegisterPage: React.FC = () => {
   };
 
   const validarPasswordSegura = (password: string): boolean => {
-    // Validación básica de contraseña segura: mínimo 6 caracteres
-    return password.length >= 6; // Puedes añadir más criterios de seguridad
+    // Validación de contraseña segura:
+    // Al menos 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo
+    const regexPassword: RegExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regexPassword.test(password);
   };
 
   const handleRegistro = async () => {
@@ -54,36 +58,47 @@ const RegisterPage: React.FC = () => {
     }
 
     if (!validarPasswordSegura(password)) {
-      Alert.alert("Error", "La contraseña debe tener al menos 6 caracteres.");
+      Alert.alert(
+        "Error",
+        "La contraseña no cumple con los criterios de seguridad. Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."
+      );
       return;
     }
 
     // Simulación de llamada a la API (reemplaza con tu endpoint real)
     try {
-      const response = await fetch("https://tu-api.com/registro", {
-        // Reemplaza con la URL de tu API
+      const response = await fetch("http://192.168.1.138:5000/auth/register", {
+        //  Endpoint de la API
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nombre: nombreCompleto,
+          // Body de la petición según la imagen
+          fullname: nombreCompleto, // Usamos 'fullname' como en la API
           email: email,
-          password: password,
+          pswd: password, // Usamos 'pswd' como en la API
         }),
       });
 
       const data: any = await response.json(); // Type 'data' as 'any' or define a specific interface
 
-      if (response.ok) {
-        Alert.alert("Registro Exitoso", "Usuario registrado correctamente.", [
-          {
-            text: "Iniciar Sesión",
-            onPress: () => <Link href="./login">¡Quiero registrarme!</Link>,
-          }, // Asume que tienes una pantalla 'Login'
-        ]);
+      if (response.status === 201) {
+        // Verifica el código de estado 201 para registro exitoso
+        Alert.alert("Registro Exitoso", "Usuario registrado correctamente.");
+        router.navigate("user-management/login");
+      } else if (response.status === 400) {
+        Alert.alert(
+          "Error de Registro",
+          "Error en la petición. Por favor, revisa los datos."
+        );
+      } else if (response.status === 409) {
+        Alert.alert(
+          "Error de Registro",
+          "Ya existe un usuario registrado con este correo electrónico."
+        );
       } else {
-        // Manejar errores de la API y mostrarlos al usuario
+        // Manejar otros errores de la API y mostrarlos al usuario
         let errorMessage: string =
           "Error en el registro. Por favor, intenta de nuevo.";
         if (data && data.message) {
@@ -130,6 +145,12 @@ const RegisterPage: React.FC = () => {
       />
 
       <Button title="Registrarse" onPress={handleRegistro} />
+      <View style={{ marginTop: 20 }}>
+        <Button
+          title="Iniciar Sesión"
+          onPress={() => router.navigate("user-management/login")}
+        />
+      </View>
     </View>
   );
 };
@@ -147,6 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
+
   input: {
     height: 40,
     borderColor: "gray",

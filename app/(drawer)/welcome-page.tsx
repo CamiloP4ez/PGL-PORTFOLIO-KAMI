@@ -1,10 +1,25 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import { Link } from "expo-router";
+import { View, Text, Image, StyleSheet, Pressable, Alert } from "react-native";
+import { Link, useRouter } from "expo-router";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import "react-native-get-random-values";
+import * as AuthService from "../../services/authService";
 
 export default function AppPage() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await AuthService.removeToken();
+      router.replace("/user-management/login");
+    } catch (error) {
+      console.error("Error during logout in AppPage:", error);
+      Alert.alert(
+        "Error",
+        "Ocurrió un error al cerrar sesión. Por favor, intenta de nuevo."
+      );
+    }
+  };
   return (
     <View style={styles.container}>
       <Image style={styles.avatar} source={require("../../assets/luffy.png")} />
@@ -32,6 +47,15 @@ export default function AppPage() {
           <Text style={styles.buttonText}>Ir a la lista de compras</Text>
         </Pressable>
       </Link>
+      <Pressable
+        style={({ pressed }) => [
+          styles.buttonLogout, // Use a slightly different style for logout
+          pressed && styles.buttonLogoutPressed, // Optional pressed style for logout
+        ]}
+        onPress={handleLogout}
+      >
+        <Text style={styles.buttonLogoutText}>Cerrar Sesión</Text>
+      </Pressable>
     </View>
   );
 }
@@ -77,6 +101,29 @@ const styles = StyleSheet.create({
     color: "#333333",
     fontSize: 17,
     fontWeight: "700",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  buttonLogout: {
+    backgroundColor: "#FF5733", // Example: A more distinct color for logout (orange/red)
+    paddingVertical: 10, // Slightly less vertical padding
+    paddingHorizontal: 20, // Slightly less horizontal padding
+    borderRadius: 8, // Slightly less rounded
+    alignItems: "center",
+    marginTop: 30, // More margin to separate it
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 }, // Less shadow
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3, // Less elevation
+  },
+  buttonLogoutPressed: {
+    backgroundColor: "#CC462A", // Darker shade for pressed state
+  },
+  buttonLogoutText: {
+    color: "#FFFFFF", // White text for logout button
+    fontSize: 16,
+    fontWeight: "600",
     letterSpacing: 0.5,
     textTransform: "uppercase",
   },
