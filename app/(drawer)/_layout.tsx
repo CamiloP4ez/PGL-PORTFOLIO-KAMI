@@ -15,7 +15,7 @@ const DrawerLayout = () => {
           }}
         />
         <Drawer.Screen
-          name="shopping/index"
+          name="shop/index"
           options={{
             drawerLabel: "Shopping List",
             title: "Lista de compras",

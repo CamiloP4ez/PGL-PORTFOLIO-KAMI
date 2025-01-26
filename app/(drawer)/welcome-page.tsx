@@ -37,7 +37,7 @@ export default function AppPage() {
         </Pressable>
       </Link>
 
-      <Link href="./shopping" asChild>
+      <Link href="./shop" asChild>
         <Pressable
           style={({ pressed }) => [
             styles.button,

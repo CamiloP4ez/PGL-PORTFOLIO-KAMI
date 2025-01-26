@@ -7,7 +7,7 @@ export const storeToken = async (token: string): Promise<void> => {
     await AsyncStorage.setItem(TOKEN_KEY, token);
   } catch (error) {
     console.error("Error storing token:", error);
-    throw error; // Or handle error as needed
+    throw error;
   }
 };
 
@@ -17,7 +17,7 @@ export const getToken = async (): Promise<string | null> => {
     return token;
   } catch (error) {
     console.error("Error getting token:", error);
-    return null; // Or throw error if you prefer
+    return null;
   }
 };
 
@@ -26,6 +26,6 @@ export const removeToken = async (): Promise<void> => {
     await AsyncStorage.removeItem(TOKEN_KEY);
   } catch (error) {
     console.error("Error removing token:", error);
-    throw error; // Or handle error
+    throw error;
   }
 };
