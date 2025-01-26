@@ -8,14 +8,14 @@ const DrawerLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer screenOptions={{ headerShown: true }}>
         <Drawer.Screen
-          name="profile" // This is the name of the page and must match the url from root
+          name="profile"
           options={{
             drawerLabel: "Home",
             title: "¡Bienvenido!",
           }}
         />
         <Drawer.Screen
-          name="shopping/index" // This is the name of the page and must match the url from root
+          name="shopping/index"
           options={{
             drawerLabel: "Shopping List",
             title: "Lista de compras",

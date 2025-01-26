@@ -49,8 +49,8 @@ export default function AppPage() {
       </Link>
       <Pressable
         style={({ pressed }) => [
-          styles.buttonLogout, // Use a slightly different style for logout
-          pressed && styles.buttonLogoutPressed, // Optional pressed style for logout
+          styles.buttonLogout,
+          pressed && styles.buttonLogoutPressed,
         ]}
         onPress={handleLogout}
       >
@@ -105,23 +105,23 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   buttonLogout: {
-    backgroundColor: "#FF5733", // Example: A more distinct color for logout (orange/red)
-    paddingVertical: 10, // Slightly less vertical padding
-    paddingHorizontal: 20, // Slightly less horizontal padding
-    borderRadius: 8, // Slightly less rounded
+    backgroundColor: "#FF5733",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
     alignItems: "center",
-    marginTop: 30, // More margin to separate it
+    marginTop: 30,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 }, // Less shadow
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 3, // Less elevation
+    elevation: 3,
   },
   buttonLogoutPressed: {
-    backgroundColor: "#CC462A", // Darker shade for pressed state
+    backgroundColor: "#CC462A",
   },
   buttonLogoutText: {
-    color: "#FFFFFF", // White text for logout button
+    color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
     letterSpacing: 0.5,

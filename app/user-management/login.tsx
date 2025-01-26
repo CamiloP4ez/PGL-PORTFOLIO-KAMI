@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
 import React, { useState } from "react";
 import { Link, useRouter } from "expo-router";
-import * as AuthService from "../../services/authService"; // Assuming authService.ts is in a 'services' folder at the root
+import * as AuthService from "../../services/authService";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -9,7 +9,6 @@ const LoginPage = () => {
   const router = useRouter();
 
   const validarEmail = (email: string): boolean => {
-    // Validación básica de formato de correo electrónico con regex
     const regexEmail: RegExp =
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regexEmail.test(email);
@@ -32,15 +31,13 @@ const LoginPage = () => {
 
     try {
       const response = await fetch("http://192.168.1.138:5000/auth/login", {
-        // Endpoint de la API: /auth/login
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // Body de la petición según la imagen
           email: email,
-          pswd: password, // Usamos 'pswd' como en la API
+          pswd: password,
         }),
       });
 
@@ -49,16 +46,13 @@ const LoginPage = () => {
       console.log("Response Data:", data);
 
       if (response.status == 201) {
-        // Corrected to 201
-        // Login successful - Assuming API returns a token in the response
-        const token = data.object.token; // Access token correctly
-        // router.navigate("user-management/login"); // REMOVED THIS LINE - Seems incorrect
+        const token = data.object.token;
         if (token) {
           await AuthService.storeToken(token);
           Alert.alert("Login Exitoso", "Bienvenido!", [
             {
               text: "Continuar",
-              onPress: () => router.navigate("/(drawer)/welcome-page"), // Redirect to welcome page
+              onPress: () => router.navigate("/(drawer)/welcome-page"),
             },
           ]);
         } else {
@@ -68,19 +62,16 @@ const LoginPage = () => {
           );
         }
       } else if (response.status == 401) {
-        // Unauthorized - Incorrect credentials (status code 401)
         Alert.alert(
           "Error de Login",
           "Email o contraseña incorrectos. Por favor, verifica tus credenciales."
         );
       } else if (response.status == 400) {
-        // Bad Request (status code 400) - Invalid body or no body
         Alert.alert(
           "Error de Login",
           "Petición incorrecta. Por favor, revisa los datos de inicio de sesión."
         );
       } else {
-        // Other server errors
         let errorMessage = "Error de Login. Por favor, intenta de nuevo.";
         if (data && data.message) {
           errorMessage = data.message;

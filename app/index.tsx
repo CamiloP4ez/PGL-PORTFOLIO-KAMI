@@ -1,28 +1,27 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import * as AuthService from "../services/authService"; // Adjust path if necessary
+import * as AuthService from "../services/authService";
 
 export default function AppPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Add loading state
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const checkTokenAndNavigate = async () => {
       try {
-        const token = await AuthService.getToken(); // Get token using AuthService
+        const token = await AuthService.getToken();
         if (token) {
-          // Token exists, assume it's valid for now (can add validation later)
-          router.replace("/(drawer)/welcome-page"); // Use replace to prevent going back to index
+          router.replace("/(drawer)/welcome-page");
         } else {
-          router.replace("/user-management/login"); // Use replace for login
+          router.replace("/user-management/login");
         }
       } catch (error) {
         console.error("Error checking token:", error);
-        // Handle error appropriately, maybe navigate to login as a fallback
+
         router.replace("/user-management/login");
       } finally {
-        setIsLoading(false); // Set loading to false after check is complete
+        setIsLoading(false);
       }
     };
 
@@ -37,8 +36,6 @@ export default function AppPage() {
     );
   }
 
-  // This should ideally not be reached as we are using router.replace in useEffect
-  // but as a fallback, in case isLoading is initially false for some reason.
   return (
     <View style={styles.container}>
       <Text>Redireccionando...</Text>

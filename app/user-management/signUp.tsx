@@ -1,38 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
 import { Redirect, router } from "expo-router";
-import { Link } from "expo-router";
-import { useNavigation } from "@react-navigation/native";
-// import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-// Define types for navigation (assuming you are using Stack Navigator)
-type RootStackParamList = {
-  Login: undefined; // Assuming 'Login' screen has no params
-  // Define other screens and their params if needed
-};
-
-// type RegistroUsuarioNavigationProp = NativeStackNavigationProp<
-//   RootStackParamList,
-//   "Login" // Target screen for navigation after registration
-// >;
 
 const RegisterPage: React.FC = () => {
   const [nombreCompleto, setNombreCompleto] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  //   const navigation = useNavigation<RegistroUsuarioNavigationProp>();
-
   const validarEmail = (email: string): boolean => {
-    // Validación básica de formato de correo electrónico con regex
     const regexEmail: RegExp =
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regexEmail.test(email);
   };
 
   const validarPasswordSegura = (password: string): boolean => {
-    // Validación de contraseña segura:
-    // Al menos 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo
     const regexPassword: RegExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regexPassword.test(password);
@@ -65,26 +46,22 @@ const RegisterPage: React.FC = () => {
       return;
     }
 
-    // Simulación de llamada a la API (reemplaza con tu endpoint real)
     try {
       const response = await fetch("http://192.168.1.138:5000/auth/register", {
-        //  Endpoint de la API
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // Body de la petición según la imagen
-          fullname: nombreCompleto, // Usamos 'fullname' como en la API
+          fullname: nombreCompleto,
           email: email,
-          pswd: password, // Usamos 'pswd' como en la API
+          pswd: password,
         }),
       });
 
-      const data: any = await response.json(); // Type 'data' as 'any' or define a specific interface
+      const data: any = await response.json();
 
       if (response.status === 201) {
-        // Verifica el código de estado 201 para registro exitoso
         Alert.alert("Registro Exitoso", "Usuario registrado correctamente.");
         router.navigate("user-management/login");
       } else if (response.status === 400) {
@@ -98,16 +75,14 @@ const RegisterPage: React.FC = () => {
           "Ya existe un usuario registrado con este correo electrónico."
         );
       } else {
-        // Manejar otros errores de la API y mostrarlos al usuario
         let errorMessage: string =
           "Error en el registro. Por favor, intenta de nuevo.";
         if (data && data.message) {
-          errorMessage = data.message; // Intenta obtener un mensaje de error más específico de la API
+          errorMessage = data.message;
         }
         Alert.alert("Error de Registro", errorMessage);
       }
     } catch (error: any) {
-      // Type 'error' as 'any' or a specific error type if known
       console.error("Error al registrar usuario:", error);
       Alert.alert(
         "Error de Registro",
