@@ -11,16 +11,16 @@ import {
   Switch,
 } from "react-native";
 import { v4 as uuid } from "uuid";
-import ShoppingForm from "../../components/ShoppingForm";
+import ShoppingForm from "../../../components/ShoppingForm";
 
 const categoryImages: { [key: string]: any } = {
-  panadería: require("../../assets/categories/bakery.jpg"),
-  bebidas: require("../../assets/categories/beverages.jpg"),
-  enlatados: require("../../assets/categories/canned.png"),
-  carnes: require("../../assets/categories/meat.jpg"),
-  pescados: require("../../assets/categories/fish.jpg"),
-  "frutas-verduras": require("../../assets/categories/produce.jpg"),
-  otros: require("../../assets/categories/others.jpg"),
+  panadería: require("../../../assets/categories/bakery.jpg"),
+  bebidas: require("../../../assets/categories/beverages.jpg"),
+  enlatados: require("../../../assets/categories/canned.png"),
+  carnes: require("../../../assets/categories/meat.jpg"),
+  pescados: require("../../../assets/categories/fish.jpg"),
+  "frutas-verduras": require("../../../assets/categories/produce.jpg"),
+  otros: require("../../../assets/categories/others.jpg"),
 };
 
 type Product = {

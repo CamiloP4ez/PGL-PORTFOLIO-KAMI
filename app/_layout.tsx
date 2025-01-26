@@ -7,9 +7,9 @@ import Header from "../components/Header";
 const _layout = () => {
   return (
     <ListManagerProviders>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Header />
-      </View>
+      </View> */}
       <View style={styles.body}>
         <View style={{ width: "100%" }}>
           <ImageBackground
