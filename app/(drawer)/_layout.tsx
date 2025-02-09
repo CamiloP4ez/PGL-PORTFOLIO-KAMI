@@ -28,6 +28,13 @@ const DrawerLayout = () => {
             title: "Lista de compras",
           }}
         />
+        <Drawer.Screen
+          name="camera/index"
+          options={{
+            drawerLabel: "camara",
+            title: "camareando",
+          }}
+        />
       </Drawer>
     </GestureHandlerRootView>
   );
