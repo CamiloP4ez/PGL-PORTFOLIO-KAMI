@@ -8,6 +8,13 @@ const DrawerLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer screenOptions={{ headerShown: true }}>
         <Drawer.Screen
+          name="welcome-page"
+          options={{
+            drawerLabel: "Welcome",
+            title: "WELCOME TO THE APP",
+          }}
+        />
+        <Drawer.Screen
           name="profile"
           options={{
             drawerLabel: "Home",
